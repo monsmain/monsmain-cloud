@@ -18,7 +18,7 @@
             <small>English</small> <img src='https://github.com/monsmain/ighack/blob/main/images/flag-en.png' alt='English' style='width: 20px;height: 15px;border-radius: 3px;' /> </a> | <img src='https://github.com/monsmain/ighack/blob/main/images/Flag-iran.png' alt='فارسی' style='width: 20px;height: 15px;border-radius: 3px;' /> <small>فارسی</small>
 </div>
 
-### 🚀 [نصب‌کننده را باز کنید و پنل خودتان را بگیرید](https://installer-cloud.monsmain.workers.dev)
+### 🚀 [نصب‌کننده را باز کنید و پنل خودتان را بگیرید](https://cloud-installer.monsmain.workers.dev/)
 
 </div>
 
@@ -81,7 +81,7 @@
 
 ### ۲ · نصب پنل
 
-1. نصب‌کننده را باز کنید: **<https://installer-cloud.monsmain.workers.dev>**
+1. نصب‌کننده را باز کنید: **<https://cloud-installer.monsmain.workers.dev/>**
 2. روی **ساخت خودکار توکن** بزنید — صفحه‌ی کلودفلر با همه‌ی دسترسی‌های لازم که از قبل انتخاب شده‌اند باز می‌شود.
 3. روی **Continue to summary ← Create Token** بزنید، توکن را کپی کنید و در نصب‌کننده بچسبانید.
 4. یک نام انتخاب کنید (پیش‌فرض `monsmain-cloud`)، اگر R2 روی حسابتان فعال است تیک **R2** را نگه دارید و **نصب** را بزنید.
