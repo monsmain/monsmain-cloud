@@ -12,7 +12,15 @@
 [![PWA](https://img.shields.io/badge/PWA-installable-0a0a0a?style=flat-square)](#نصب-به-عنوان-برنامه-pwa)
 [![UI](https://img.shields.io/badge/UI-English%20%7C%20%D9%81%D8%A7%D8%B1%D8%B3%DB%8C-0a0a0a?style=flat-square)](#)
 
-[English](README.md) · **فارسی**
+<div align="center">
+    <p>
+        <a href="README-FA.md">
+            <small>فارسی</small>
+            <img src='https://github.com/monsmain/ighack/blob/main/images/Flag-iran.png' alt='persian' style='width: 20px;height: 15px;border-radius: 3px;' />
+        </a>
+        | <img src='https://github.com/monsmain/ighack/blob/main/images/flag-en.png' alt='English' style='width: 20px;height: 15px;border-radius: 3px;' />
+        <small>English</small> </p> 
+</div>
 
 ### 🚀 [نصب‌کننده را باز کنید و پنل خودتان را بگیرید](https://installer-cloud.monsmain.workers.dev)
 
