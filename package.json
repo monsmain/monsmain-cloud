@@ -1,0 +1,12 @@
+{
+  "name": "monsmain-cloud",
+  "version": "1.0.0",
+  "description": "A private cloud drive on Cloudflare Workers: web panel + Telegram bot, with Telegram and R2 storage.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  }
+}

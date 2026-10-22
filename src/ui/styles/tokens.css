@@ -1,0 +1,19 @@
+:root{--brand:oklch(.705 .213 47.6);--brand-fg:oklch(.145 0 0);--radius:.625rem;--success:oklch(.62 .16 160);--warning:oklch(.72 .16 75);--r-ctl:calc(var(--radius) - 2px)}
+html[lang=en]{--bg:oklch(1 0 0);--fg:oklch(.145 0 0);--card:oklch(1 0 0);--primary:oklch(.205 0 0);--primary-fg:oklch(.985 0 0);--muted:oklch(.97 0 0);--muted-fg:oklch(.556 0 0);--accent:oklch(.97 0 0);--border:oklch(.922 0 0);--input:oklch(.922 0 0);--ring:oklch(.708 0 0);--destructive:oklch(.577 .245 27.325);--page:oklch(.985 0 0);--r-surface:calc(var(--radius) + 4px);--font:'Geist','Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;--fs:15px;--lh:1.6;color-scheme:light}
+html[lang=en][data-theme=dark]{--bg:oklch(.145 0 0);--fg:oklch(.985 0 0);--card:oklch(.205 0 0);--primary:oklch(.922 0 0);--primary-fg:oklch(.205 0 0);--muted:oklch(.269 0 0);--muted-fg:oklch(.708 0 0);--accent:oklch(.269 0 0);--border:oklch(1 0 0/10%);--input:oklch(1 0 0/15%);--ring:oklch(.556 0 0);--destructive:oklch(.704 .191 22.216);--page:oklch(.145 0 0);color-scheme:dark}
+html[lang=fa]{--bg:oklch(.985 .002 285);--fg:oklch(.16 .004 285);--card:oklch(1 0 0);--primary:oklch(.16 .004 285);--primary-fg:oklch(.985 0 0);--muted:oklch(.96 .003 285);--muted-fg:oklch(.5 .01 285);--accent:oklch(.955 .003 285);--border:oklch(0 0 0/9%);--input:oklch(0 0 0/12%);--ring:oklch(.55 0 0);--destructive:oklch(.55 .2 25);--page:oklch(.97 .002 285);--r-surface:calc(var(--radius) + 12px);--font:'Vazirmatn',ui-sans-serif,system-ui,sans-serif;--fs:16px;--lh:1.8;color-scheme:light}
+html[lang=fa][data-theme=dark]{--bg:oklch(.115 .002 285);--fg:oklch(.975 0 0);--card:oklch(.14 .002 285);--primary:oklch(.975 0 0);--primary-fg:oklch(.13 0 0);--muted:oklch(.175 .002 285);--muted-fg:oklch(.63 .004 285);--accent:oklch(.2 .002 285);--border:oklch(1 0 0/8%);--input:oklch(1 0 0/11%);--ring:oklch(.7 0 0);--destructive:oklch(.65 .2 25);--page:oklch(.115 .002 285);color-scheme:dark}
+.pc-controls{display:flex;align-items:center;gap:8px;direction:ltr}
+.pc-seg{display:inline-flex;padding:3px;gap:2px;border:1px solid var(--border);border-radius:var(--r-ctl);background:var(--muted)}
+.pc-seg button{appearance:none;border:0;background:transparent;cursor:pointer;height:28px;min-width:42px;padding:0 10px;display:grid;place-items:center;font:600 12px/1 'Vazirmatn','Geist','Inter',system-ui,sans-serif;border-radius:calc(var(--radius) - 5px);color:var(--muted-fg);transition:background .15s,color .15s,box-shadow .15s}
+.pc-seg button:hover{color:var(--fg)}
+.pc-seg button[aria-pressed=true]{background:var(--brand);color:var(--brand-fg);box-shadow:0 1px 2px oklch(0 0 0/.18)}
+.pc-seg button:focus-visible,.pc-icon:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.pc-icon{appearance:none;cursor:pointer;width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--border);border-radius:var(--r-ctl);color:var(--fg);background:transparent;transition:background .15s}
+.pc-icon:hover{background:var(--accent);border-color:var(--brand)}
+.pc-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+html{--hl:oklch(.553 .195 38.4)}
+html[data-theme=dark]{--hl:oklch(.75 .183 55.9)}
+.pc-icon .i-sun{display:none}
+html[data-theme=dark] .pc-icon .i-sun{display:block}
+html[data-theme=dark] .pc-icon .i-moon{display:none}
