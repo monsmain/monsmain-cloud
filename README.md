@@ -20,7 +20,7 @@
         <small>English</small> </p> 
 </div>
 
-### 🚀 [Open the installer and get your own panel](https://installer-cloud.monsmain.workers.dev)
+### 🚀 [Open the installer and get your own panel](https://cloud-installer.monsmain.workers.dev)
 
 </div>
 
@@ -83,7 +83,7 @@ Add screenshots to a docs/ folder and uncomment:
 
 ### 2 · Install the panel
 
-1. Open the installer: **<https://installer-cloud.monsmain.workers.dev>**
+1. Open the installer: **<https://cloud-installer.monsmain.workers.dev>**
 2. Press **Create the token for me** — Cloudflare opens with every permission already selected.
 3. Press **Continue to summary → Create Token**, copy the token and paste it into the installer.
 4. Pick a name (default `monsmain-cloud`), keep **R2** ticked if it is enabled on your account, press **Install**.
