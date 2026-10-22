@@ -14,7 +14,7 @@
 
 <div align="center">
     <p>
-        <a href="README-FA.md">
+        <a href="README.md">
             <small>فارسی</small>
             <img src='https://github.com/monsmain/ighack/blob/main/images/Flag-iran.png' alt='persian' style='width: 20px;height: 15px;border-radius: 3px;' />
         </a>
