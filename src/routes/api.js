@@ -1,4 +1,3 @@
-// Admin JSON API: config, files, folders, trash, usage, uploads (R2 multipart, remote URL, Telegram).
 import { pickTgFile } from '../bot/helpers.js';
 import { ensureWebhook } from '../bot/webhook.js';
 import { CONFIG, VERSION } from '../config.js';
@@ -13,10 +12,8 @@ import { Usage } from '../lib/usage.js';
 import { isSafeRemoteUrl } from '../security/url-guard.js';
 import { Utils, enc } from '../utils.js';
 
-// Returns a Response for /api/* requests (admin only), otherwise null.
 export async function apiRoutes(c) {
     const { request, env, ctx, url, method, path, passHash, botToken, chatId, sessionSecret, webhookSecret, setupToken, db, tg, isAuth, ip } = c;
-    // ---------- API (admin only) ----------
     if (path.startsWith('/api/')) {
         if (!isAuth) return Utils.jsonResp({ error: 'UNAUTHORIZED' }, 401);
         const json = Utils.jsonResp;
@@ -73,7 +70,6 @@ export async function apiRoutes(c) {
             if (method === 'DELETE' && m[2] === 'share') return json({ success: await db.revokeShare(chatId, id) });
         }
 
-        // ----- remote URL -----
         if (method === 'POST' && path === '/api/check-url') {
             const { url: fileUrl } = await readJson(request);
             if (!isSafeRemoteUrl(fileUrl)) return json({ error: 'INVALID_URL' }, 400);
@@ -111,7 +107,6 @@ export async function apiRoutes(c) {
             return new Response(readable, { headers: { 'Content-Type': 'application/x-ndjson', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' } });
         }
 
-        // ----- R2 multipart through the Worker binding (no S3 keys, no CORS) -----
         if (path.startsWith('/api/r2/')) {
             if (!env.BUCKET) return json({ error: 'R2_NOT_CONFIGURED' }, 400);
             if (method === 'POST' && path === '/api/r2/create') {
@@ -146,14 +141,12 @@ export async function apiRoutes(c) {
             }
         }
 
-        // ----- Telegram engine upload (max 20MB) -----
         if (method === 'POST' && path === '/api/upload') {
             if (!tg || !chatId) return json({ error: 'TG_NOT_CONFIGURED' }, 400);
             if (parseInt(request.headers.get('content-length') || '0', 10) > CONFIG.maxTgSize + 1024 * 1024) return json({ error: 'TOO_BIG_TG' }, 413);
             const fd = await request.formData(); const file = fd.get('file'); const folderId = fd.get('folderId');
             if (!file || typeof file === 'string') return json({ error: 'BAD_FILE' }, 400);
             if (file.size > CONFIG.maxTgSize) return json({ error: 'TOO_BIG_TG' }, 413);
-            // Photos / videos / audio are sent as real media (shown inline in Telegram); anything else, or a rejected media upload, falls back to a document
             const asMedia = fd.get('asMedia') !== '0';
             let kind = asMedia ? mediaKind(file.name, file.size) : 'document';
             let res = await tg.sendMedia(kind, chatId, file);
@@ -162,11 +155,11 @@ export async function apiRoutes(c) {
             if (!picked) return json({ error: 'UPLOAD_FAILED' }, 502);
             const info = await tg.getFile(picked.fileId);
             if (!info.ok) return json({ error: 'UPLOAD_FAILED' }, 502);
-            const name = kind === 'photo' ? Utils.cleanName(file.name).replace(/\.[^.]+$/, '') + '.jpg' : file.name; // Telegram re-encodes photos as JPEG
+            const name = kind === 'photo' ? Utils.cleanName(file.name).replace(/\.[^.]+$/, '') + '.jpg' : file.name;
             await db.addFile(chatId, { id: 'f_' + Utils.generateId(), name, size: kind === 'photo' ? (picked.size || file.size) : file.size, url: `/download/${picked.fileId}/${info.result.file_path}`, date: Date.now(), folderId: folderId === 'root' ? null : String(folderId || ''), provider: 'tg', tgFileId: picked.fileId, mediaKind: kind, messageId: res.result.message_id });
             return json({ success: true, provider: 'tg', kind });
         }
         return json({ error: 'NOT_FOUND' }, 404);
     }
-    return null; // not handled here
+    return null;
 }

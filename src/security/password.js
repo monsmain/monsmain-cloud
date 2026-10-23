@@ -1,8 +1,6 @@
-// Password hashing (PBKDF2-SHA256 with a random salt).
 import { CONFIG } from '../config.js';
 import { Utils, enc } from '../utils.js';
 
-// ---------- Password hashing (PBKDF2, salted) ----------
 export const Password = {
     async derive(password, salt, iterations) {
         const key = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveBits']);
@@ -13,7 +11,7 @@ export const Password = {
         const bits = await this.derive(password, salt, CONFIG.pbkdf2Iter);
         return `pbkdf2$${CONFIG.pbkdf2Iter}$${Utils.b64urlEncode(salt)}$${Utils.b64urlEncode(bits)}`;
     },
-    async legacyHash(password) { // SHA-256 hex (panels created before v2)
+    async legacyHash(password) {
         const buf = await crypto.subtle.digest('SHA-256', enc.encode(password));
         return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
     },

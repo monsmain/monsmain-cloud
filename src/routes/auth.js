@@ -1,4 +1,3 @@
-// Login, first-time setup, password recovery and the panel / login pages.
 import { ensureWebhook, setupBotCommands } from '../bot/webhook.js';
 import { CONFIG } from '../config.js';
 import { maybeCleanup } from '../lib/maintenance.js';
@@ -10,13 +9,11 @@ import { AuthPage } from '../ui/auth-page.js';
 import { WebApp } from '../ui/panel.generated.js';
 import { Utils } from '../utils.js';
 
-// Returns a Response when the request belongs to the auth pages, otherwise null.
 export async function authRoutes(c) {
     const { request, env, ctx, url, method, path, passHash, botToken, chatId, sessionSecret, webhookSecret, setupToken, db, tg, isAuth, ip } = c;
-    // ---------- Auth pages ----------
     if (method === 'GET' && path === '/') {
         if (isAuth) {
-            if (botToken && !webhookSecret) ctx.waitUntil(ensureWebhook(env, botToken, url.origin)); // upgrade older installs
+            if (botToken && !webhookSecret) ctx.waitUntil(ensureWebhook(env, botToken, url.origin));
             ctx.waitUntil(maybeCleanup(env));
             return Utils.htmlResp(WebApp());
         }
@@ -45,7 +42,7 @@ export async function authRoutes(c) {
         const secret = Utils.randomToken(24);
         const wh = await bot.setWebhook(`${url.origin}/hook`, secret);
         if (!wh.ok) return fail('webhook_failed', 400, wh.description);
-        await setupBotCommands(bot); // adds /start (and /menu) to the bot's command menu
+        await setupBotCommands(bot);
         const newSession = Utils.randomToken();
         await Promise.all([
             env.DB.put('site_password_hash', await Password.hash(pwd)), env.DB.put('tg_bot_token', newToken), env.DB.put('tg_chat_id', newChat),
@@ -89,7 +86,7 @@ export async function authRoutes(c) {
         if (pending && Utils.timingSafeEqual(input, pending.code)) {
             const newSession = Utils.randomToken();
             await env.DB.put('site_password_hash', pending.hash);
-            await env.DB.put('session_secret', newSession); // signs out all other sessions
+            await env.DB.put('session_secret', newSession);
             await env.DB.delete('reset_pending'); await RateLimit.clear(env.DB, `verify_${ip}`);
             return Utils.redirect('/', Session.cookie(await Session.create(newSession)));
         }
@@ -97,5 +94,5 @@ export async function authRoutes(c) {
         if (pending) { pending.attempts++; if (pending.attempts >= CONFIG.loginMaxFails) await env.DB.delete('reset_pending'); else await env.DB.put('reset_pending', JSON.stringify(pending), { expirationTtl: 600 }); }
         return Utils.htmlResp(AuthPage('verify', { err: 'bad_code' }), 401);
     }
-    return null; // not handled here
+    return null;
 }

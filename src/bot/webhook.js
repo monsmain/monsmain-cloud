@@ -1,4 +1,3 @@
-// Webhook entry, webhook registration and the bot command menu.
 import { handleCallback } from './callbacks.js';
 import { handleMessage } from './messages.js';
 import { readJson } from '../http.js';
@@ -8,7 +7,6 @@ import { Telegram } from '../lib/telegram.js';
 import { RateLimit } from '../security/rate-limit.js';
 import { Utils } from '../utils.js';
 
-// Creates the "/" command menu of the bot (start + menu) in English and Persian
 export async function setupBotCommands(tg) {
     await Promise.allSettled([
         tg.setMyCommands([{ command: 'start', description: 'Start the bot and open the menu' }, { command: 'menu', description: 'Show the main menu' }]),
@@ -31,7 +29,7 @@ export async function handleHook(request, env, ctx, url, S) {
     const from = (update.callback_query && update.callback_query.from) || (update.message && update.message.from);
     if (!from) return new Response('OK');
 
-    if (String(from.id) !== String(S.chatId)) { // single-admin bot: ignore everybody else
+    if (String(from.id) !== String(S.chatId)) {
         if (update.message && update.message.chat && update.message.chat.type === 'private') {
             const hit = await RateLimit.hit(env.DB, `stranger_${from.id}`, 3600);
             if (hit <= 1) await tg.sendMessage(from.id, I18N.en.private_bot + '\n' + I18N.fa.private_bot);

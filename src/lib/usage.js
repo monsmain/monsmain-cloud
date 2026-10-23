@@ -1,7 +1,5 @@
-// R2 usage (read from the bucket, cached) and warning levels.
 import { CONFIG } from '../config.js';
 
-// ---------- R2 usage ----------
 export const Usage = {
     async limitGb(kv) { const v = await kv.get('r2_limit_gb'); const n = v === null ? CONFIG.r2LimitGbDefault : parseFloat(v); return Number.isFinite(n) && n >= 0 ? n : CONFIG.r2LimitGbDefault; },
     async listBucket(bucket) {
@@ -9,7 +7,6 @@ export const Usage = {
         do { const r = await bucket.list({ limit: 1000, cursor }); for (const o of r.objects) { bytes += o.size; objects++; } cursor = r.truncated ? r.cursor : undefined; } while (cursor && ++pages < 50);
         return { bytes, objects, partial: !!cursor };
     },
-    // Real usage = what the bucket actually holds (objects, incl. trash and leftovers). Cached; `fresh` forces a new listing.
     async compute(env, db, chatId, { fresh = false } = {}) {
         const fs = await db.getFS(chatId, { includeTrash: true });
         const sum = (arr) => arr.reduce((a, f) => a + (f.size || 0), 0);

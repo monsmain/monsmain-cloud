@@ -1,7 +1,5 @@
-// Content types, safe Content-Disposition and Telegram media kinds.
 import { Telegram } from './telegram.js';
 
-// ---------- Content types ----------
 const MIME = {
     jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif', webp: 'image/webp', avif: 'image/avif', bmp: 'image/bmp', ico: 'image/x-icon',
     svg: 'image/svg+xml', mp4: 'video/mp4', m4v: 'video/mp4', webm: 'video/webm', mov: 'video/quicktime', mkv: 'video/x-matroska',
@@ -22,10 +20,9 @@ export function contentDisposition(name, attachment) {
     return `${attachment ? 'attachment' : 'inline'}; filename="${ascii}"; filename*=UTF-8''${star}`;
 }
 
-// ---------- Telegram media kinds ----------
 export const mediaKind = (name, size) => {
     const ext = (String(name).split('.').pop() || '').toLowerCase();
-    if (['jpg', 'jpeg', 'png', 'webp'].includes(ext)) return size <= 10 * 1024 * 1024 ? 'photo' : 'document'; // sendPhoto limit is 10MB
+    if (['jpg', 'jpeg', 'png', 'webp'].includes(ext)) return size <= 10 * 1024 * 1024 ? 'photo' : 'document';
     if (ext === 'gif') return 'animation';
     if (['mp4', 'mov', 'm4v'].includes(ext)) return 'video';
     if (['mp3', 'm4a'].includes(ext)) return 'audio';

@@ -1,4 +1,3 @@
-// Setup / login / recovery page (English + Persian, light + dark).
 import { CONFIG, VERSION } from '../config.js';
 import { Telegram } from '../lib/telegram.js';
 import { PWA_REGISTER, PWA_TAGS } from '../pwa.js';

@@ -1,4 +1,3 @@
-// Remote URL downloads streamed into R2.
 import { guessType } from './mime.js';
 import { Storage } from './storage.js';
 import { isSafeRemoteUrl } from '../security/url-guard.js';
@@ -14,7 +13,6 @@ export function deriveName(res, fileUrl) {
     return name.includes('.') ? name : name + '.bin';
 }
 
-// Streams a remote file into R2 (no reliance on content-length, bounded memory)
 export async function remoteToR2(env, fileUrl, { maxBytes, onProgress } = {}) {
     if (!isSafeRemoteUrl(fileUrl)) throw new Error('INVALID_URL');
     const res = await fetch(fileUrl, { headers: { 'User-Agent': 'Mozilla/5.0' }, redirect: 'follow' });

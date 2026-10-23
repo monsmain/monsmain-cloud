@@ -1,9 +1,5 @@
-// Bot menu, paging and Telegram file picking.
 import { I18N } from '../i18n/bot-messages.js';
 
-// =====================================================================
-//  Helpers used by the worker
-// =====================================================================
 export const PAGE_SIZE = 5;
 
 export const trunc = (s, n) => { s = String(s); return s.length > n ? s.slice(0, n - 1) + '…' : s; };

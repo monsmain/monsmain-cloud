@@ -1,4 +1,3 @@
-// Serving files (R2 / Telegram, ranges, safe headers) and deleting stored objects.
 import { contentDisposition, guessType, isActiveContent } from './mime.js';
 import { Telegram } from './telegram.js';
 
@@ -46,7 +45,7 @@ export async function serveFile(request, env, botToken, file, { download = false
     headers.set('Accept-Ranges', 'bytes');
     headers.set('X-Content-Type-Options', 'nosniff');
     headers.set('Referrer-Policy', 'no-referrer');
-    headers.set('Cache-Control', isPublic ? 'no-store' : 'private, max-age=86400'); // object keys are immutable; lets thumbnails load once
+    headers.set('Cache-Control', isPublic ? 'no-store' : 'private, max-age=86400');
     const active = isActiveContent(type, file.name);
     headers.set('Content-Disposition', contentDisposition(file.name, download || active));
     if (active) headers.set('Content-Security-Policy', "sandbox; default-src 'none'");

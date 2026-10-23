@@ -1,7 +1,5 @@
-// Web app manifest, service worker and icons.
 import { ICON_192, ICON_512, ICON_MASKABLE } from './assets/icons.generated.js';
 
-// ---------- PWA ----------
 export const PWA_ICONS = { '/icons/192.png': ICON_192, '/icons/512.png': ICON_512, '/icons/maskable.png': ICON_MASKABLE };
 
 const MANIFEST = JSON.stringify({
@@ -10,7 +8,6 @@ const MANIFEST = JSON.stringify({
     icons: [{ src: '/icons/192.png', sizes: '192x192', type: 'image/png', purpose: 'any' }, { src: '/icons/512.png', sizes: '512x512', type: 'image/png', purpose: 'any' }, { src: '/icons/maskable.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }]
 });
 
-// Network-only service worker: makes the panel installable and shows a friendly page offline. It never caches private data.
 const SW_JS = `self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
 const OFFLINE = '<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>monsmain-cloud</title><body style="margin:0;min-height:100vh;display:grid;place-items:center;font-family:system-ui,sans-serif;background:#0a0a0a;color:#fafafa;text-align:center"><div><div style="font-size:42px">☁️</div><h2>Offline · آفلاین</h2><p style="color:#a3a3a3">Check your connection and try again.<br>اتصال اینترنت را بررسی کنید.</p><button onclick="location.reload()" style="background:#f97316;color:#0a0a0a;border:0;border-radius:12px;padding:12px 22px;font-weight:700;font-size:15px">Retry · تلاش مجدد</button></div>';

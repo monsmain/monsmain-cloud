@@ -1,7 +1,5 @@
-// File / folder / trash / share index stored as one JSON document in KV.
 import { Utils } from '../utils.js';
 
-// ---------- Database (single JSON document per admin, serialized writes) ----------
 export class Database {
     static _chain = Promise.resolve();
     constructor(kv) { this.kv = kv; }
@@ -60,7 +58,7 @@ export class Database {
             if (!folder) return false;
             const trashedAt = folder.deletedAt;
             folder.deletedAt = null;
-            fs.files.forEach(f => { const viaFolder = f.viaFolder === true || (f.viaFolder === undefined && f.deletedAt >= trashedAt); /* undefined = files trashed by a pre-v2 panel */ if (f.deletedAt && viaFolder && f.originFolderId === folderId) { f.folderId = folderId; f.originFolderId = null; f.viaFolder = false; f.deletedAt = null; } });
+            fs.files.forEach(f => { const viaFolder = f.viaFolder === true || (f.viaFolder === undefined && f.deletedAt >= trashedAt);  if (f.deletedAt && viaFolder && f.originFolderId === folderId) { f.folderId = folderId; f.originFolderId = null; f.viaFolder = false; f.deletedAt = null; } });
             await this._save(chatId, fs); return true;
         });
     }
@@ -161,7 +159,6 @@ export class Database {
             if (n) await this._save(chatId, fs); return n;
         });
     }
-    // Permanently removes trash items older than `ageMs` (and folders with everything inside them); returns the removed file records
     purgeExpired(chatId, ageMs) {
         return this._tx(async () => {
             const fs = await this._load(chatId); const cutoff = Date.now() - ageMs;

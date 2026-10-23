@@ -1,4 +1,3 @@
-// Bot text / file / link message handler.
 import { generateMenu, pickTgFile } from './helpers.js';
 import { CONFIG } from '../config.js';
 import { I18N } from '../i18n/bot-messages.js';
@@ -20,10 +19,10 @@ export async function handleMessage(B, msg) {
 
     if (/^\/setpass(\s|$)/.test(text)) {
         const newPass = text.slice(8).trim();
-        tg.deleteMessage(chatId, msg.message_id).catch(() => {}); // remove the plain-text password from the chat
+        tg.deleteMessage(chatId, msg.message_id).catch(() => {});
         if (newPass.length < CONFIG.minPassword) return tg.sendMessage(chatId, T.pass_short);
         await env.DB.put('site_password_hash', await Password.hash(newPass));
-        await env.DB.put('session_secret', Utils.randomToken()); // signs out every web session
+        await env.DB.put('session_secret', Utils.randomToken());
         return tg.sendMessage(chatId, T.pass_changed);
     }
 

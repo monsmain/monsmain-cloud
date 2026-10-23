@@ -1,4 +1,3 @@
-// Trash retention cleanup and R2 usage alerts.
 import { CONFIG } from '../config.js';
 import { I18N } from '../i18n/bot-messages.js';
 import { Database } from './database.js';
@@ -6,7 +5,6 @@ import { purgeStorage } from './files.js';
 import { Telegram } from './telegram.js';
 import { Usage } from './usage.js';
 
-// Trash retention: permanently delete items older than CONFIG.trashDays (daily cron + lazy fallback)
 export async function runCleanup(env) {
     const [chatId, botToken] = await Promise.all([env.DB.get('tg_chat_id'), env.DB.get('tg_bot_token')]);
     if (!chatId) return 0;
@@ -22,7 +20,6 @@ export async function maybeCleanup(env) {
     return runCleanup(env);
 }
 
-// Warns the admin in Telegram once when R2 usage crosses 80% / 95% of the configured limit
 export async function checkUsageAlert(env, db, chatId, tg) {
     try {
         if (!env.BUCKET || !tg) return;

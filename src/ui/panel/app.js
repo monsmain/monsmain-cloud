@@ -137,7 +137,6 @@
         function closeMove() { const m = document.getElementById('move-modal'); m.classList.add('opacity-0'); setTimeout(() => m.classList.add('hidden'), 250); }
         async function moveTo(ids, folderId) { closeMove(); try { await api('/api/files/bulk', { method: 'POST', body: { action: 'move', ids, folderId } }); showToast(DICT[currentLang].moved); toggleSelect(false); loadFS(); } catch (e) { showToast(e.message, true); } }
 
-        // ----- multi-select -----
         function visibleFileIds() { const q = searchQuery; return fileSystem.files.filter(f => (currentFolder === 'root' ? !f.folderId : f.folderId === currentFolder) && (!q || String(f.name).toLowerCase().indexOf(q) > -1)).map(f => f.id); }
         function updateSelectBar() {
             const T = DICT[currentLang]; const bar = document.getElementById('select-bar'); if (!bar) return;
@@ -152,7 +151,6 @@
         function bulkMove() { if (selected.size) openMoveSheet(Array.from(selected)); }
         async function bulkDelete() { const n = selected.size; if (!n) return; if (!confirm(DICT[currentLang].bulk_delete_confirm.replace('{n}', n))) return; try { await api('/api/files/bulk', { method: 'POST', body: { action: 'delete', ids: Array.from(selected) } }); showToast(DICT[currentLang].trashed_toast); toggleSelect(false); loadFS(); } catch (e) { showToast(e.message, true); } }
 
-        // ----- R2 usage -----
         function usageHtml() {
             const u = usageData; if (!u || !u.r2 || !u.r2.enabled) return ''; const T = DICT[currentLang]; const r = u.r2;
             const gb = (b) => (b / 1e9).toFixed(b >= 1e10 ? 1 : 2); const pct = r.percent; const level = pct === null || pct === undefined ? 0 : pct >= 95 ? 2 : pct >= 80 ? 1 : 0;
@@ -165,7 +163,6 @@
         function renderUsage() { ['usage-box-upload', 'usage-box-drive'].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = usageHtml(); }); }
         async function loadUsage(fresh) { try { usageData = await api('/api/usage' + (fresh ? '?fresh=1' : '')); renderUsage(); } catch (e) { if (fresh) showToast(e.message, true); } }
 
-        // ----- PWA -----
         let deferredInstall = null;
         window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredInstall = e; const b = document.getElementById('btn-install-app'); if (b) b.classList.remove('hidden'); });
         window.addEventListener('appinstalled', () => { deferredInstall = null; const b = document.getElementById('btn-install-app'); if (b) b.classList.add('hidden'); });
@@ -201,7 +198,6 @@
         function trashCard(icon, name, meta, id, isFolder) { const el = document.createElement('div'); el.className = 'app-card item-card p-4 flex flex-col gap-3 group relative opacity-80'; el.innerHTML = '<div class="flex items-start gap-3 overflow-hidden">' + icon + '<div class="min-w-0 flex-1 pt-0.5"><p class="font-bold text-sm text-neutral-800 dark:text-neutral-200 truncate" dir="auto" title="' + esc(name) + '">' + esc(name) + '</p><p class="text-[10px] text-neutral-400 mt-0.5 font-mono">' + esc(meta) + '</p></div></div><div class="flex gap-1.5 mt-auto pt-3 border-t border-neutral-100 dark:border-neutral-800/50"><button onclick="restoreItem(\'' + id + '\',' + isFolder + ')" class="flex-1 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 py-1.5 rounded-lg text-xs font-semibold transition">' + esc(DICT[currentLang].restore) + '</button><button onclick="purgeItem(\'' + id + '\',' + isFolder + ')" class="bg-rose-50 hover:bg-rose-100 dark:bg-rose-500/10 dark:hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 px-2.5 py-1.5 rounded-lg transition text-xs font-semibold">' + esc(DICT[currentLang].purge) + '</button></div>'; return el; }
         function daysLeft(item) { const keep = (trashSystem && trashSystem.retentionDays) || 30; return Math.max(0, Math.ceil(keep - (Date.now() - (item.deletedAt || Date.now())) / 86400000)); }
 
-        // --- URL VALIDATION & STREAMING UPLOAD ---
         let urlCheckTimeout; let validatedUrl = '';
         function debounceCheckUrl() {
             clearTimeout(urlCheckTimeout);

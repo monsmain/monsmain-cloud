@@ -1,4 +1,3 @@
-// Bot button handlers and upload confirmation.
 import { generateMenu } from './helpers.js';
 import { showFiles, showTrash } from './views.js';
 import { CONFIG } from '../config.js';
@@ -18,7 +17,6 @@ export async function handleCallback(B, cb) {
     const ack = (text, alert = false) => tg.answerCallbackQuery(cb.id, text, alert);
     if (!msgId) return ack();
 
-    // exact matches first
     if (data === 'noop') return ack();
     if (data === 'main_menu') { await ack(); return tg.editMessageText(chatId, msgId, T.main_menu, generateMenu(B.lang)); }
     if (data === 'my_chatid') { await ack(); return tg.sendMessage(chatId, T.chat_id_msg.replace('{id}', chatId)); }
@@ -66,7 +64,7 @@ export async function handleCallback(B, cb) {
             if (ID_RE.test(arg)) { if (action === 'rf') await db.restoreFile(chatId, arg); else await db.restoreFolder(chatId, arg); }
             await ack(T.restored, true); return showTrash(B, T, msgId, 0);
         }
-        case 'pf': case 'pfo': { // ask for confirmation before permanent deletion
+        case 'pf': case 'pfo': {
             const fs = await db.getFS(chatId, { includeTrash: true });
             const item = (action === 'pf' ? fs.files : fs.folders).find(x => x.id === arg && x.deletedAt);
             if (!item) return ack(T.not_found, true);

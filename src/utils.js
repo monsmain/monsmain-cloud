@@ -1,5 +1,3 @@
-// Small helpers: encoding, tokens, names, cookies, JSON / HTML responses.
-
 export const enc = new TextEncoder();
 
 export const dec = new TextDecoder();

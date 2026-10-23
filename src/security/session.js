@@ -1,8 +1,6 @@
-// Signed session cookies and signed temporary download links.
 import { CONFIG } from '../config.js';
 import { Utils, dec, enc } from '../utils.js';
 
-// ---------- Signed sessions (HMAC) ----------
 export const Session = {
     COOKIE: 'pc_sid',
     async hmac(secret, data) {
@@ -24,7 +22,6 @@ export const Session = {
     clearCookie: () => `${Session.COOKIE}=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax`
 };
 
-// ---------- Signed temporary download links (used by the bot) ----------
 export const Links = {
     async sign(secret, fileId, exp) { return Session.hmac(secret, `dl.${fileId}.${exp}`); },
     async create(secret, origin, fileId) {

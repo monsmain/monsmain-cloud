@@ -1,6 +1,3 @@
-// SSRF guard for remote-URL uploads.
-
-// ---------- Remote URL safety (basic SSRF guard) ----------
 export function isSafeRemoteUrl(raw) {
     let u; try { u = new URL(raw); } catch { return false; }
     if (!['http:', 'https:'].includes(u.protocol)) return false;

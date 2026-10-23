@@ -1,13 +1,10 @@
-// R2 helpers: keys and streamed multipart uploads.
 import { CONFIG } from '../config.js';
 import { Utils } from '../utils.js';
 
-// ---------- Object storage helpers ----------
 export const Storage = {
     makeKey: (name) => `r2_${Date.now()}_${Utils.generateId().slice(0, 6)}_${Utils.safeKeyName(name)}`,
     validKey: (key) => /^r2_\d{10,}_[a-f0-9]{6}_[A-Za-z0-9._-]{1,80}$/.test(String(key)),
 
-    // Streams any body into R2 without trusting content-length. Small bodies use put(), larger ones multipart.
     async putStream(bucket, key, stream, { contentType, onProgress, maxBytes } = {}) {
         const httpMetadata = { contentType: contentType || 'application/octet-stream' };
         const reader = stream.getReader();

@@ -1,6 +1,3 @@
-// Theme bootstrap, favicon and icons shared by the pages.
-
-// ---------- Shared UI bits (design tokens: shadcn/ui neutral for English, VibeFarsi graphite for Persian) ----------
 export const FAVICON_TAGS = `<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f97316'/%3E%3Cpath transform='translate(6 6) scale(.83)' d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z' fill='%230a0a0a'/%3E%3C/svg%3E"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafafa"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a">`;
 
 export const THEME_BOOT = "(function(){var d=document.documentElement,t=localStorage.getItem('theme'),l=localStorage.getItem('lang')||((navigator.language||'').toLowerCase().indexOf('fa')===0?'fa':'en');d.setAttribute('data-theme',(t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');d.lang=l;d.dir=l==='fa'?'rtl':'ltr';})();";

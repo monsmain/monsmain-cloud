@@ -1,10 +1,6 @@
-// Bot file list and trash list screens.
 import { PAGE_SIZE, generateMenu, trunc } from './helpers.js';
 import { Telegram } from '../lib/telegram.js';
 
-// =====================================================================
-//  Telegram bot
-// =====================================================================
 function filesView(fs, T, page) {
     const pages = Math.max(1, Math.ceil(fs.files.length / PAGE_SIZE));
     page = Math.min(Math.max(0, page), pages - 1);

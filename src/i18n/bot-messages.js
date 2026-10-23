@@ -1,8 +1,6 @@
-// Telegram bot texts (Persian / English).
 import { Telegram } from '../lib/telegram.js';
 import { Password } from '../security/password.js';
 
-// ---------- Bot texts ----------
 export const I18N = {
     fa: {
         welcome: '👋 سلام! به فضای ابری پیشرفته خوش آمدید.',
